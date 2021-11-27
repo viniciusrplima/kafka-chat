@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<?import javafx.scene.control.Label?>
+<HBox xmlns:fx="http://javafx.com/fxml" fx:id="wrapper" styleClass="wrapper"
+      fx:controller="com.pacheco.app.controller.ChatItemController">
+
+    <VBox styleClass="chat-item" fx:id="chatItem">
+        <Text fx:id="user" styleClass="user"/>
+        <TextFlow maxWidth="300">
+            <Text fx:id="text" styleClass="text"/>
+        </TextFlow>
+    </VBox>
+</HBox>
+

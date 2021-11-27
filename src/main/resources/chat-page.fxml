@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" styleClass="grid" fx:id="container"
+      fx:controller="com.pacheco.app.controller.ChatController">
+    <ScrollPane styleClass="scroll" VBox.vgrow="ALWAYS" fx:id="scroll">
+        <VBox styleClass="chat" fx:id="chat" alignment="BOTTOM_LEFT" spacing="15">
+
+        </VBox>
+    </ScrollPane>
+
+    <HBox>
+        <TextField HBox.hgrow="ALWAYS" promptText="Digite uma mensagem..." fx:id="messageField"
+            onKeyPressed="#keyListener"></TextField>
+        <Button text="send" onMouseClicked="#sendMessage"></Button>
+    </HBox>
+</VBox>
+

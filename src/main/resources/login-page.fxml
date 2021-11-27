@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.pacheco.app.controller.LoginController"
+      alignment="CENTER">
+
+    <HBox styleClass="alert" alignment="CENTER">
+        <Label text="ERRO: username and password incorrect" styleClass="alert-text" alignment="CENTER"
+            fx:id="alert"></Label>
+    </HBox>
+
+    <GridPane fx:id="loginForm" styleClass="login-form"
+              alignment="CENTER" vgap="20" hgap="10" >
+
+        <Label text="Login" style="-fx-font-size: 14pt" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+        <Label text="Username" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+        <TextField GridPane.rowIndex="2" GridPane.columnIndex="2" fx:id="username"/>
+        <Label text="Password" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+        <TextField GridPane.rowIndex="3" GridPane.columnIndex="2" fx:id="password"/>
+
+        <Button text="submit" GridPane.rowIndex="4" GridPane.columnIndex="2" onMouseClicked="#submit"></Button>
+    </GridPane>
+
+</VBox>
