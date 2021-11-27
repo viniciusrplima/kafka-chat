@@ -7,26 +7,23 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
 
-<?import javafx.scene.control.Hyperlink?>
-<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.pacheco.app.controller.LoginController"
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.pacheco.app.controller.RegisterController"
       alignment="CENTER">
 
     <HBox styleClass="alert" alignment="CENTER">
-        <Label text="ERRO: username and password incorrect" styleClass="alert-text" alignment="CENTER"
-            fx:id="alert"></Label>
+        <Label text="" styleClass="alert-text" alignment="CENTER"
+               fx:id="alert"></Label>
     </HBox>
 
-    <GridPane fx:id="loginForm" styleClass="login-form"
-              alignment="CENTER" vgap="20" hgap="10" >
+    <GridPane fx:id="loginForm" styleClass="login-form" alignment="CENTER" vgap="20" hgap="10" >
 
-        <Label text="Login" style="-fx-font-size: 14pt" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+        <Label text="Register" style="-fx-font-size: 14pt" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
         <Label text="Username" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
         <TextField GridPane.rowIndex="2" GridPane.columnIndex="2" fx:id="usernameField"/>
         <Label text="Password" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
         <TextField GridPane.rowIndex="3" GridPane.columnIndex="2" fx:id="passwordField"/>
 
-        <Button text="submit" GridPane.rowIndex="4" GridPane.columnIndex="2" onMouseClicked="#submit"/>
-        <Hyperlink text="I don't have account" GridPane.rowIndex="5" GridPane.columnIndex="2" onAction="#toRegisterPage"/>
+        <Button text="submit" GridPane.rowIndex="4" GridPane.columnIndex="2" onMouseClicked="#submit"></Button>
     </GridPane>
 
 </VBox>

@@ -7,7 +7,7 @@ import javafx.scene.text.Text;
 import lombok.Data;
 
 @Data
-public class ChatItemController implements Controller {
+public class ChatItemController extends AbstractController {
 
     @FXML
     private Text user;

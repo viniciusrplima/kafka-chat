@@ -3,9 +3,6 @@ package com.pacheco.app.controller;
 import com.pacheco.app.model.MessageDTO;
 import com.pacheco.app.service.KafkaClient;
 import javafx.animation.AnimationTimer;
-import javafx.beans.InvalidationListener;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,10 +16,9 @@ import lombok.SneakyThrows;
 
 import java.io.IOException;
 import java.util.Optional;
-import java.util.Timer;
 
 @Data
-public class ChatController implements Controller {
+public class ChatController extends AbstractController {
 
     @FXML
     private VBox container;
@@ -36,13 +32,9 @@ public class ChatController implements Controller {
     @FXML
     private TextField messageField;
 
-    private KafkaClient client = new KafkaClient();
-
-    private Timer timer;
+    private KafkaClient client;
 
     public ChatController() {
-        client.changeTopic("kafka-chat-topic");
-
         new AnimationTimer() {
             @SneakyThrows
             @Override
@@ -51,8 +43,7 @@ public class ChatController implements Controller {
 
                 if (messageDTO.isPresent()) {
                     try {
-
-                        addMessage(messageDTO.get(), false);
+                        addMessage(messageDTO.get());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -61,20 +52,17 @@ public class ChatController implements Controller {
         }.start();
     }
 
+    @Override
     public void setup() {
-        scroll.heightProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-                scroll.setVvalue(1);
-            }
-        });
+        client = new KafkaClient(getCommand().getUsername());
+        client.changeTopic("kafka-chat-topic");
     }
 
     public void setTopic(String topic) {
         this.client.changeTopic(topic);
     }
 
-    public void addMessage(MessageDTO message, Boolean isMe) throws IOException {
+    public void addMessage(MessageDTO message) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("chat-item.fxml"));
         Parent chatItem = loader.load();
 
@@ -82,14 +70,13 @@ public class ChatController implements Controller {
         controller.getText().setText(message.getMessage());
         controller.getUser().setText(message.getUsername());
 
-        if (isMe) {
+        if (message.getUsername().equalsIgnoreCase(getCommand().getUsername())) {
             controller.getWrapper().setStyle("-fx-alignment: bottom-right");
             controller.getChatItem().setStyle("-fx-background-color: #cfc");
         }
 
-        controller.getUser().setText("marcela");
-
         chat.getChildren().add(chatItem);
+        scroll.setVvalue(1);
     }
 
     public void sendMessage() throws IOException {
@@ -97,7 +84,7 @@ public class ChatController implements Controller {
 
         if (!message.isEmpty()) {
             messageField.setText("");
-            client.send(message);
+            client.send(new MessageDTO(getCommand().getUsername(), message));
         }
     }
 

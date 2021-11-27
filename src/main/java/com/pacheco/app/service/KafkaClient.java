@@ -7,7 +7,6 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.springframework.kafka.support.serializer.JsonDeserializer;
 
 import java.time.Duration;
 import java.util.*;
@@ -22,7 +21,7 @@ public class KafkaClient {
 
     private String topic;
 
-    public KafkaClient() {
+    public KafkaClient(String username) {
 
         Properties prodProps = new Properties();
         prodProps.put("bootstrap.servers", "localhost:29092");
@@ -38,7 +37,7 @@ public class KafkaClient {
 
         Properties consProps = new Properties();
         consProps.put("bootstrap.servers", "localhost:29092");
-        consProps.put("group.id", "test");
+        consProps.put("group.id", username);
         consProps.put("enable.auto.commit", "true");
         consProps.put("auto.commit.interval.ms", "1000");
         consProps.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
@@ -47,8 +46,9 @@ public class KafkaClient {
         this.consumer = new KafkaConsumer<>(consProps);
     }
 
-    public void send(String message) {
-        producer.send(new ProducerRecord<String, MessageDTO>(this.topic, "message", new MessageDTO("vinicius", message)));
+    public void send(MessageDTO messageDTO) {
+        producer.send(new ProducerRecord<String, MessageDTO>(this.topic, "message",
+                new MessageDTO(messageDTO.getUsername(), messageDTO.getMessage())));
     }
 
     public void subscribe(String topic) {
