@@ -1,7 +1,7 @@
 package com.pacheco.app;
 
 import com.pacheco.app.controller.*;
-import com.pacheco.app.service.KafkaClient;
+import com.pacheco.app.model.AppState;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -13,11 +13,9 @@ import java.io.IOException;
 
 public class ClientChat extends Application implements Command {
 
-    private KafkaClient client;
-
-    private String username;
-
     private Scene scene;
+
+    private AppState state = new AppState();
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -53,11 +51,26 @@ public class ClientChat extends Application implements Command {
 
     @Override
     public void setUsername(String username) {
-        this.username = username;
+        state.setUsername(username);
     }
 
     @Override
     public String getUsername() {
-        return username;
+        return state.getUsername();
+    }
+
+    @Override
+    public void setToken(String token) {
+        state.setToken("Bearer " + token);
+    }
+
+    @Override
+    public String getToken() {
+        return state.getToken();
+    }
+
+    @Override
+    public AppState getState() {
+        return state;
     }
 }

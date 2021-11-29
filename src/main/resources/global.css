@@ -1,11 +1,4 @@
 
-.app {
-}
-
-.alert {
-
-}
-
 .alert .alert-text {
     visibility: hidden;
     -fx-background-color: #fcc;
@@ -28,11 +21,15 @@
     -fx-padding: 20px;
 }
 
-.box {
-    -fx-background-color: red;
-    -fx-padding: 5px;
+.title-wrapper {
+    -fx-padding: 10px;
+    -fx-alignment: center;
 }
 
+.chat-title {
+    -fx-font-size: 12pt;
+    -fx-text-alignment: center;
+}
 
 .chat-item {
     -fx-background-color: white;
@@ -47,4 +44,28 @@
 
 .chat-item .text {
     -fx-wrap-text: true;
+}
+
+.chat-list-profile {
+    -fx-padding: 20px;
+    -fx-background-color: #bbb;
+    -fx-border-color: transparent #999 transparent transparent;
+    -fx-border-width: 2px;
+}
+
+.chat-list-control {
+    -fx-padding: 20px;
+}
+
+.chat-list-control Button {
+    -fx-fit-to-width: true;
+    -fx-max-width: Infinity;
+}
+
+.chat-list-profile Label {
+    -fx-font-size: 10pt;
+}
+
+.chat-list-profile Text {
+    -fx-font-size: 14pt;
 }

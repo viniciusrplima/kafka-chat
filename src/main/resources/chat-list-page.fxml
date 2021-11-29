@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Button?>
+
+<HBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.pacheco.app.controller.ChatListController">
+    <VBox styleClass="chat-list-profile">
+        <Label text="username: "></Label>
+        <Text text="vinicius"></Text>
+    </VBox>
+    <ListView styleClass="chat-list-list" HBox.hgrow="ALWAYS" fx:id="list">
+    </ListView>
+    <VBox spacing="20" styleClass="chat-list-control">
+        <HBox>
+            <Button text="Enter" HBox.hgrow="ALWAYS" onAction="#enterChat"></Button>
+        </HBox>
+        <HBox>
+            <Button text="Create" HBox.hgrow="ALWAYS" onAction="#createChat"></Button>
+        </HBox>
+        <HBox>
+            <Button text="Accept Invitation" HBox.hgrow="ALWAYS"></Button>
+        </HBox>
+        <HBox>
+            <Button text="Invite" HBox.hgrow="ALWAYS"></Button>
+        </HBox>
+        <HBox>
+            <Button text="Exit" HBox.hgrow="ALWAYS" onAction="#exitChat"></Button>
+        </HBox>
+
+    </VBox>
+</HBox>

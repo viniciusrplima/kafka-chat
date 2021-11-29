@@ -6,6 +6,7 @@ import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -32,6 +33,9 @@ public class ChatController extends AbstractController {
     @FXML
     private TextField messageField;
 
+    @FXML
+    private Label chatTitle;
+
     private KafkaClient client;
 
     public ChatController() {
@@ -55,7 +59,8 @@ public class ChatController extends AbstractController {
     @Override
     public void setup() {
         client = new KafkaClient(getCommand().getUsername());
-        client.changeTopic("kafka-chat-topic");
+        client.changeTopic(getCommand().getState().getChat().getKafkaTopic());
+        chatTitle.setText(getCommand().getState().getChat().getName());
     }
 
     public void setTopic(String topic) {
@@ -86,6 +91,10 @@ public class ChatController extends AbstractController {
             messageField.setText("");
             client.send(new MessageDTO(getCommand().getUsername(), message));
         }
+    }
+
+    public void goBack() {
+        changePageTo("chat-list-page");
     }
 
     public void keyListener(KeyEvent keyEvent) throws IOException {
