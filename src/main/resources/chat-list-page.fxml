@@ -10,7 +10,7 @@
 <HBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.pacheco.app.controller.ChatListController">
     <VBox styleClass="chat-list-profile">
         <Label text="username: "></Label>
-        <Text text="vinicius"></Text>
+        <Text fx:id="profileUsername"></Text>
     </VBox>
     <ListView styleClass="chat-list-list" HBox.hgrow="ALWAYS" fx:id="list">
     </ListView>
@@ -22,7 +22,7 @@
             <Button text="Create" HBox.hgrow="ALWAYS" onAction="#createChat"></Button>
         </HBox>
         <HBox>
-            <Button text="Accept Invitation" HBox.hgrow="ALWAYS"></Button>
+            <Button text="Accept Invitation" HBox.hgrow="ALWAYS" onAction="#acceptInvitation"></Button>
         </HBox>
         <HBox>
             <Button text="Invite" HBox.hgrow="ALWAYS"></Button>

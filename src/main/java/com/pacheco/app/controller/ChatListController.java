@@ -2,10 +2,9 @@ package com.pacheco.app.controller;
 
 import com.pacheco.app.model.ChatDTO;
 import com.pacheco.app.service.ChatServer;
-import com.sun.javafx.collections.ObservableListWrapper;
-import javafx.beans.value.ObservableListValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.text.Text;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -19,6 +18,9 @@ public class ChatListController extends AbstractController {
     @FXML
     private ListView list;
 
+    @FXML
+    private Text profileUsername;
+
     private List<ChatDTO> chats;
 
     private ChatServer server;
@@ -26,6 +28,7 @@ public class ChatListController extends AbstractController {
     public void setup() {
         chats = new ArrayList<>();
         server = new ChatServer();
+        profileUsername.setText(getCommand().getUsername());
         updateList();
     }
 
@@ -44,8 +47,13 @@ public class ChatListController extends AbstractController {
 
     public void enterChat() {
         int index = list.getSelectionModel().getSelectedIndex();
-        getCommand().getState().setChat(chats.get(index));
-        changePageTo("chat-page");
+
+        if (index >= 0) {
+            getCommand().getState().setChat(chats.get(index));
+            changePageTo("chat-page");
+        } else {
+            showAlert("No chat selected");
+        }
     }
 
     public void createChat() {
@@ -54,23 +62,53 @@ public class ChatListController extends AbstractController {
 
         Optional<String> chatNameOpt = dialog.showAndWait();
 
-        if (chatNameOpt.isPresent() && !chatNameOpt.get().isBlank()) {
-            doCreateChat(chatNameOpt.get());
-        }
-        else if (chatNameOpt.isPresent() && chatNameOpt.get().isBlank()) {
-            showAlert("Chat name can't be empty");
+        if (chatNameOpt.isPresent()) {
+            if (!chatNameOpt.get().isBlank()) {
+                doCreateChat(chatNameOpt.get());
+            }
+            else {
+                showAlert("Chat name can't be empty");
+            }
         }
     }
 
     public void doCreateChat(String chatName) {
         try {
             server.createChat(chatName, getCommand().getToken());
+            updateList();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void showAlert(String message) {
+    public void acceptInvitation() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Accept Invite");
+        dialog.setContentText("Insert chat code");
+
+        Optional<String> codeOpt = dialog.showAndWait();
+
+        if (codeOpt.isPresent()) {
+            if (!codeOpt.get().isBlank()) {
+                doAcceptInvitation(codeOpt.get());
+            } else {
+                showAlert("Chat code can't be empty");
+            }
+        }
+    }
+
+    public void doAcceptInvitation(String chatCode) {
+        try {
+            server.joinChat(Integer.parseInt(chatCode), getCommand().getToken());
+            updateList();
+        } catch (NumberFormatException e) {
+            showAlert("Chat code must be a number");
+        } catch (Exception e) {
+            showAlert("Error joining chat");
+        }
+    }
+
+    private void showAlert(String message) {
         Dialog dialog = new Dialog();
         dialog.setTitle("Alert");
         dialog.setContentText(message);

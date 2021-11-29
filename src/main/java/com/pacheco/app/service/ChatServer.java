@@ -12,9 +12,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 public class ChatServer {
@@ -38,6 +36,11 @@ public class ChatServer {
     public List<ChatDTO> listChats(String token) throws IOException, InterruptedException {
         ChatDTO[] chats = get("/chat", ChatDTO[].class, token);
         return Arrays.asList(chats);
+    }
+
+    public ChatDTO joinChat(int chatCode, String token) throws IOException, InterruptedException {
+        ChatDTO chat = post(String.format("/chat/%d", chatCode), null, ChatDTO.class, token);
+        return chat;
     }
 
     private <T> String toJson(T object) throws JsonProcessingException {
