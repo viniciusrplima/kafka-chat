@@ -17,4 +17,6 @@ public abstract class AbstractController implements Controller {
 
     public void setup() {}
 
+    public void quit() {}
+
 }

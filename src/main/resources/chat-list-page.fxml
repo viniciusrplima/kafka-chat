@@ -25,7 +25,7 @@
             <Button text="Accept Invitation" HBox.hgrow="ALWAYS" onAction="#acceptInvitation"></Button>
         </HBox>
         <HBox>
-            <Button text="Invite" HBox.hgrow="ALWAYS"></Button>
+            <Button text="Invite" HBox.hgrow="ALWAYS" onAction="#invite"></Button>
         </HBox>
         <HBox>
             <Button text="Exit" HBox.hgrow="ALWAYS" onAction="#exitChat"></Button>

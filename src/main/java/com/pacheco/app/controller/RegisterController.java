@@ -28,7 +28,7 @@ public class RegisterController extends AbstractController {
     private ChatServer server;
 
     public void setup() {
-        this.server = new ChatServer();
+        this.server = new ChatServer(getCommand().getState().getChatServerUrl());
     }
 
     public void submit() {

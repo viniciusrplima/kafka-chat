@@ -7,6 +7,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import lombok.Data;
 
+import java.net.ConnectException;
+
 @Data
 public class LoginController extends AbstractController {
 
@@ -22,7 +24,7 @@ public class LoginController extends AbstractController {
     private ChatServer server;
 
     public void setup() {
-        this.server = new ChatServer();
+        this.server = new ChatServer(getCommand().getState().getChatServerUrl());
     }
 
     public void submit() {
@@ -49,6 +51,9 @@ public class LoginController extends AbstractController {
         }
         catch (ApiErrorException e) {
             setAlert(e.getMessage());
+        }
+        catch (ConnectException e) {
+            setAlert("Can't connect with server");
         }
         catch (Exception e) {
             e.printStackTrace();

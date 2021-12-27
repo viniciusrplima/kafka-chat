@@ -17,7 +17,11 @@ import java.util.List;
 
 public class ChatServer {
 
-    private static final String BASE_URL = "http://localhost:3000";
+    private String baseUrl;
+
+    public ChatServer(String baseUrl) {
+        this.baseUrl = baseUrl;
+    }
 
     public void register(String username, String password) throws IOException, InterruptedException {
         UserDTO userDTO = post("/register", new UserDTO(username, password), UserDTO.class);
@@ -59,7 +63,7 @@ public class ChatServer {
     private <T> T get(String path, Class<T> responseClass, String token) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(BASE_URL + path))
+                .uri(URI.create(baseUrl + path))
                 .header("Authorization", token)
                 .GET()
                 .build();
@@ -79,7 +83,7 @@ public class ChatServer {
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(BASE_URL + path))
+                .uri(URI.create(baseUrl + path))
                 .header("Authorization", token)
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(toJson(body)))

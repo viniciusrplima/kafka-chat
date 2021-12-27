@@ -6,4 +6,6 @@ public interface Controller {
 
     public void setup();
 
+    public void quit();
+
 }

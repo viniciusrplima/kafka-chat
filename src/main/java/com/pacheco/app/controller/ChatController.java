@@ -58,9 +58,14 @@ public class ChatController extends AbstractController {
 
     @Override
     public void setup() {
-        client = new KafkaClient(getCommand().getUsername());
+        client = new KafkaClient(getCommand().getUsername(), getCommand().getState().getKafkaServerUrl());
         client.changeTopic(getCommand().getState().getChat().getKafkaTopic());
         chatTitle.setText(getCommand().getState().getChat().getName());
+    }
+
+    @Override
+    public void quit() {
+        client.close();
     }
 
     public void setTopic(String topic) {

@@ -17,6 +17,8 @@ public class ClientChat extends Application implements Command {
 
     private AppState state = new AppState();
 
+    private Controller currentPageController;
+
     @Override
     public void start(Stage stage) throws Exception {
         scene = new Scene(new Group(), 600, 480);
@@ -27,7 +29,7 @@ public class ClientChat extends Application implements Command {
         stage.setTitle("Kafka Chat");
         stage.show();
 
-        changePageTo("login-page");
+        changePageTo("config-page");
     }
 
     private static void main(String[] args) {
@@ -39,9 +41,14 @@ public class ClientChat extends Application implements Command {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(String.format("%s.fxml", pageName)));
             Parent root = loader.load();
-            Controller controller = loader.getController();
-            controller.setCommand(this);
-            controller.setup();
+
+            if (currentPageController != null) {
+                currentPageController.quit();
+            }
+
+            currentPageController = loader.getController();
+            currentPageController.setCommand(this);
+            currentPageController.setup();
 
             scene.setRoot(root);
         } catch (IOException e) {

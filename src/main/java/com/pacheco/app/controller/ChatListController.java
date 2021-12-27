@@ -27,7 +27,7 @@ public class ChatListController extends AbstractController {
 
     public void setup() {
         chats = new ArrayList<>();
-        server = new ChatServer();
+        server = new ChatServer(getCommand().getState().getChatServerUrl());
         profileUsername.setText(getCommand().getUsername());
         updateList();
     }
@@ -105,6 +105,23 @@ public class ChatListController extends AbstractController {
             showAlert("Chat code must be a number");
         } catch (Exception e) {
             showAlert("Error joining chat");
+        }
+    }
+
+    public void invite() {
+        int index = list.getSelectionModel().getSelectedIndex();
+
+        if (index >= 0) {
+            Long chatCode = chats.get(index).getId();
+
+            Dialog dialog = new Dialog();
+            dialog.setTitle("Invite");
+            dialog.setContentText("Send this code to your friend: " + chatCode);
+            ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+            dialog.getDialogPane().getButtonTypes().add(okButton);
+            dialog.showAndWait();
+        } else {
+            showAlert("No chat selected");
         }
     }
 

@@ -19,12 +19,14 @@ public class KafkaClient {
 
     private Deque<MessageDTO> messages = new ArrayDeque<>();
 
+    private boolean closed = false;
+
     private String topic;
 
-    public KafkaClient(String username) {
+    public KafkaClient(String username, String kafkaUrl) {
 
         Properties prodProps = new Properties();
-        prodProps.put("bootstrap.servers", "localhost:29092");
+        prodProps.put("bootstrap.servers", kafkaUrl);
         prodProps.put("acks", "all");
         prodProps.put("retries", 0);
         prodProps.put("batch.size", 16384);
@@ -36,7 +38,7 @@ public class KafkaClient {
         this.producer = new KafkaProducer(prodProps);
 
         Properties consProps = new Properties();
-        consProps.put("bootstrap.servers", "localhost:29092");
+        consProps.put("bootstrap.servers", kafkaUrl);
         consProps.put("group.id", username);
         consProps.put("enable.auto.commit", "true");
         consProps.put("auto.commit.interval.ms", "1000");
@@ -65,7 +67,7 @@ public class KafkaClient {
             throw new RuntimeException("Topic not setted");
         }
 
-        if (messages == null || messages.isEmpty()) {
+        if ((messages == null || messages.isEmpty()) && !closed) {
             ConsumerRecords<String, MessageDTO> consumerRecords = consumer.poll(Duration.ofMillis(10));
 
             for (ConsumerRecord<String, MessageDTO> record : consumerRecords) {
@@ -80,6 +82,12 @@ public class KafkaClient {
         }
 
         return Optional.ofNullable(message);
+    }
+
+    public void close() {
+        closed = true;
+        consumer.close();
+        producer.close();
     }
 
 }

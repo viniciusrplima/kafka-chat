@@ -11,4 +11,8 @@ public class AppState {
 
     private ChatDTO chat;
 
+    private String kafkaServerUrl;
+
+    private String chatServerUrl;
+
 }
