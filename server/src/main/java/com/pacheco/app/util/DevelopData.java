@@ -30,8 +30,13 @@ public class DevelopData {
         user2.setUsername("joao");
         user2.setPassword("123");
 
+        UserDTO user3 = new UserDTO();
+        user3.setUsername("roberto");
+        user3.setPassword("123");
+
         User savedUser1 = userService.registerUser(user1);
         User savedUser2 = userService.registerUser(user2);
+        User savedUser3 = userService.registerUser(user3);
 
         Chat chat1 = new Chat();
         chat1.setName("my annotations");
@@ -43,8 +48,14 @@ public class DevelopData {
         chat2.setKafkaTopic("chat_ds54ds5d88d");
         chat2.setUsers(List.of(savedUser1, savedUser2));
 
+        Chat chat3 = new Chat();
+        chat3.setName("Aula de inglês");
+        chat3.setKafkaTopic("chat_dsalkdjgg88d");
+        chat3.setUsers(List.of(savedUser1, savedUser3));
+
         chatRepository.save(chat1);
         chatRepository.save(chat2);
+        chatRepository.save(chat3);
     }
 
 }
