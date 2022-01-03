@@ -1,5 +1,6 @@
 package com.pacheco.app.service;
 
+import com.pacheco.app.dto.UserDTO;
 import com.pacheco.app.exception.UserNotFoundException;
 import com.pacheco.app.model.User;
 import com.pacheco.app.repository.UserRepository;
@@ -24,9 +25,12 @@ public class UserService {
     }
 
     @Transactional
-    public User registerUser(User user) {
-        String passwordEncoded = passwordEncoder.encode(user.getPassword());
+    public User registerUser(UserDTO userDto) {
+        String passwordEncoded = passwordEncoder.encode(userDto.getPassword());
+
+        User user = new User();
         user.setPassword(passwordEncoded);
+        user.setUsername(userDto.getUsername());
 
         return repository.save(user);
     }

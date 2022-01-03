@@ -1,5 +1,6 @@
 package com.pacheco.app.controller;
 
+import com.pacheco.app.dto.UserDTO;
 import com.pacheco.app.model.User;
 import com.pacheco.app.model.jwt.JwtRequest;
 import com.pacheco.app.model.jwt.JwtResponse;
@@ -22,7 +23,7 @@ public class UserController {
     private AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public User registerUser(@RequestBody @Valid User user) {
+    public User registerUser(@RequestBody @Valid UserDTO user) {
         return userService.registerUser(user);
     }
 

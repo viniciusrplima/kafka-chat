@@ -28,22 +28,22 @@ public class ChatServer {
     }
 
     public String login(String username, String password) throws IOException, InterruptedException {
-        AuthDTO authDTO = post("/auth", new UserDTO(username, password), AuthDTO.class);
+        AuthDTO authDTO = post("/login", new UserDTO(username, password), AuthDTO.class);
         return authDTO.getJwtToken();
     }
 
     public ChatDTO createChat(String name, String token) throws IOException, InterruptedException {
-        ChatDTO chat = post("/chat", new ChatDTO(name), ChatDTO.class, token);
+        ChatDTO chat = post("/chats", new ChatDTO(name), ChatDTO.class, token);
         return chat;
     }
 
     public List<ChatDTO> listChats(String token) throws IOException, InterruptedException {
-        ChatDTO[] chats = get("/chat", ChatDTO[].class, token);
+        ChatDTO[] chats = get("/chats", ChatDTO[].class, token);
         return Arrays.asList(chats);
     }
 
     public ChatDTO joinChat(int chatCode, String token) throws IOException, InterruptedException {
-        ChatDTO chat = post(String.format("/chat/%d", chatCode), null, ChatDTO.class, token);
+        ChatDTO chat = post(String.format("/chats/%d", chatCode), null, ChatDTO.class, token);
         return chat;
     }
 
